@@ -39,4 +39,43 @@ $primary-invert: $kaldi-red-invert
 .margin-top-0
   margin-top: 0 !important
 
+.intro-content
+  margin-left: auto
+  margin-right: auto
+
+.intro-video
+  background-color: white
+  margin-left: auto
+  margin-right: auto
+  max-width: 640px
+  position: relative
+  &.has-loaded
+    .intro-spinner
+      display: none
+    .intro-iframe
+      opacity: 1
+
+.intro-buttons
+  margin-top: 1.5rem
+  .button
+    padding-left: 1.375em
+    padding-right: 1.375em
+
+
+.intro-columns
+  display: flex
+  justify-content: center
+.intro-column
+  width: calc(50% - 1.5rem)
+  &.is-content
+    margin-right: 1.5rem
+  &.is-video
+    margin-left: 1.5rem
+.intro-content
+  max-width: 440px
+.intro-title
+  margin-top: -11px
+  &:not(:last-child)
+    margin-bottom: 20px
+
 @import "~bulma"
