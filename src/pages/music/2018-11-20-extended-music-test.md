@@ -1,6 +1,6 @@
 ---
 templateKey: music-post
-title: Extended Music Test
+title: Extended Music Tests
 image: /img/kenya-tour.jpg
 date: 2018-11-20T06:49:09.270Z
 preview: >-
