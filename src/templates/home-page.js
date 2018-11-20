@@ -3,37 +3,10 @@ import PropTypes from 'prop-types'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
+import LatestReleases from '../components/LatestReleases'
 
 export const HomePageTemplate = ({ title, content, contentComponent, music }) => {
   const PageContent = contentComponent || Content
-
-  const loadLatestSongs = (posts) =>{
-    return (posts
-      .map(({ node: post }) => (
-        <div
-          className="content"
-          style={{ border: '1px solid #eaecee', padding: '2em 4em' }}
-          key={post.id}
-        >
-          <p>
-            <Link className="has-text-primary" to={post.fields.slug}>
-              {post.frontmatter.title}
-            </Link>
-            <span> &bull; </span>
-            <small>{post.frontmatter.date}</small>
-          </p>
-          <p>
-            {post.excerpt}
-            <br />
-            <br />
-            <Link className="button is-small" to={post.fields.slug}>
-              Keep Reading →
-            </Link>
-          </p>
-          <p>stupid </p>
-        </div>
-      )) )
-  }
 
   return (
     <div>
@@ -50,24 +23,24 @@ export const HomePageTemplate = ({ title, content, contentComponent, music }) =>
                   <div className="music-player"><iframe width="100%" height="100" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/421343235&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
                   </div>
                   <div>
-                    <nav class="intro-buttons">
-                      <a class="button is-primary is-large" href="{{ site.data.meta.download }}">
+                    <nav className="intro-buttons">
+                      <a className="button is-primary is-large" href="{{ site.data.meta.download }}">
                         <span><strong>Download Now</strong></span></a>
-                      <a class="button is-light is-large" href="{{ site.data.meta.documentation }}">
+                      <a className="button is-light is-large" href="{{ site.data.meta.documentation }}">
                         <span><span>View</span><strong>docs</strong></span></a>
                     </nav>
                   </div>
 
                 </div>
               </div>
-              <div class="column is-video">
-                <div id="introVideo" class="intro-video">
-                  <div class="intro-shadow"></div>
-                    <div class="intro-iframe">
+              <div className="column is-video">
+                <div id="introVideo" className="intro-video">
+                  <div className="intro-shadow"></div>
+                    <div className="intro-iframe">
                     <img src = "../img/kenya-tour.jpg"></img>
                     </div>
                     </div>
-                    <p class="intro-author">
+                    <p className="intro-author">
                     <span>Video by <a href="http://www.vuemastery.com/" target="_blank">Vue Mastery</a></span>
                     </p>
               </div>
@@ -75,16 +48,7 @@ export const HomePageTemplate = ({ title, content, contentComponent, music }) =>
           </div>
       </div>
     </section>
-    <section class="section">
-      <div class="container">
-        <h1 class="title">Latest Releases</h1>
-        <div class="columns">
-          {LatestReleases}
-          <div class="column">Auto {loadLatestSongs(music)}</div>
-          <div class="column is-three-fifths">is-three-fifths {loadActive()}</div>
-        </div>
-        </div>
-    </section>
+    <LatestReleases music={music}/>
   </div>
   )
 }
@@ -140,6 +104,10 @@ export const PageQuery = graphql`
           }
           frontmatter {
             title
+            downloadLink
+            tracklist
+            image
+            preview
           }
         }
       }
