@@ -7,7 +7,7 @@ const Navbar = () => (
   <nav className="navbar is-transparent">
     <div className="container">
       <div className="navbar-brand">
-        <Link to="/" className="navbar-item">
+        <Link to="/home" className="navbar-item">
           <figure className="image">
             <img src='../img/logo-trial.png' alt="Afro-Extended" style={{ width: '160px' }} />
           </figure>
@@ -19,6 +19,12 @@ const Navbar = () => (
         </Link>
         <Link className="navbar-item" to="/products">
           Products
+        </Link>
+        <Link className="navbar-item" to="/music">
+          Music
+        </Link>
+        <Link className="navbar-item" to="/">
+          Blog
         </Link>
       </div>
       <div className="navbar-end">

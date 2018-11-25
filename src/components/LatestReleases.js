@@ -32,33 +32,36 @@ class LatestReleases extends React.Component {
   }
 
   loadLatestSongs = (posts) =>{
-    // active = posts[i].fields.slug
 
     return (posts
       .map(({ node: post }) => {
-        if(this.state.activeSlug === post.fields.slug){
+        const title = post.frontmatter.title
+        const slug = post.fields.slug
+        const date = post.frontmatter.date
+        const description = post.frontmatter.description
+
+
+        //if its active we should highlight it
+        if(this.state.activeSlug === slug){
           return(
           <div
             className="content"
             style={{ border: '1px solid #eaecee', padding: '2em 4em' }}
-            key={post.id}
+            key={slug}
           >
-            <p>
-              <Link className="has-text-primary" to={post.fields.slug}>
-                {post.frontmatter.title}
+            <h4>
+              <Link className="has-text-primary" to={slug}>
+                {title}
               </Link>
-              <span> &bull; </span>
-              <small>{post.frontmatter.date}</small>
-            </p>
+            </h4>
+            <p><strong>{description}</strong> </p>
             <p>
-              {post.excerpt}
               <br />
-              <br />
-              <Link className="button is-small" to={post.fields.slug}>
+              <Link className="button is-small" to={slug}>
                 Keep Reading ACTIVE→
               </Link>
             </p>
-            <p>stupid </p>
+
           </div>
         )
         }
@@ -67,34 +70,27 @@ class LatestReleases extends React.Component {
         <div
           onClick={() => this.handleClick(post)}
           className="content"
-          style={{ border: '1px solid #eaecee', padding: '2em 4em' }}
-          key={post.id}
+          style={{ border: '1px solid #eaecee', padding: '2em 4em', opacity: '.50' }}
+          key={slug}
         >
           <p>
-            <Link className="has-text-primary" to={post.fields.slug}>
-              {post.frontmatter.title}
+            <Link className="has-text-primary" to={slug}>
+              {title}
             </Link>
-            <span> &bull; </span>
-            <small>{post.frontmatter.date}</small>
           </p>
+          <p>{description} </p>
           <p>
-            {post.excerpt}
             <br />
-            <br />
-            <Link className="button is-small" to={post.fields.slug}>
-              Keep Reading →
+            <Link className="button is-small" to={slug}>
+              Keep Reading
             </Link>
           </p>
-          <p>stupid </p>
+
         </div>
-      )}) )
-  }
-
-  loadActive = () => {
+      )
 
 
-
-
+    }) )
   }
 
   render() {
