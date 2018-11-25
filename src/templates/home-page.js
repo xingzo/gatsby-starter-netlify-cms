@@ -108,6 +108,8 @@ export const PageQuery = graphql`
             tracklist
             image
             preview
+            description
+            soundcloudTrackID
           }
         }
       }

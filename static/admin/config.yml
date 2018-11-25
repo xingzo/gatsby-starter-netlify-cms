@@ -24,13 +24,14 @@ collections:
     description: 'Music'
     folder: "src/pages/music"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "music-post"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: Image, name: image, widget: image}
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Preview", name: "preview", widget: "markdown"}
+      - {label: "Soundcloud Track ID", name: "soundcloudTrackID", widget: "text"}
       - {label: "Download Link", name: "downloadLink", widget: "text"}
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Tracklist", name: "tracklist", widget: "markdown"}
