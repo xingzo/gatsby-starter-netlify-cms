@@ -3,7 +3,6 @@ templateKey: music-post
 title: Extended Music Tests
 image: /img/kenya-tour.jpg
 date: 2018-11-20T06:49:09.270Z
-soundcloudTrackID: 526045422
 preview: >-
   <iframe width="100%" height="166" scrolling="no" frameborder="no"
   allow="autoplay"
