@@ -1,6 +1,6 @@
 ---
 templateKey: music-post
-title: Thanksgiving Experience Vol 22
+title: A Thanksgiving Experience Vol 22
 image: /img/atl-thanksgiving-promo.jpeg
 date: 2018-11-26T00:23:44.523Z
 preview: >-
