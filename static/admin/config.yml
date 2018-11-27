@@ -28,6 +28,7 @@ collections:
     fields:
       - {label: "Template Key", name: "templateKey", widget: "hidden", default: "music-post"}
       - {label: "Title", name: "title", widget: "string"}
+      - {label: "Pricing", name: "pricing", widget: object, fields: [{label: "Free or Premium", name: "free", widget: "boolean", default: false}, {label: "Price", name: "price", widget: "number", default: 9.99, valueType: "int", min: 1, max: 101}]}
       - {label: Image, name: image, widget: image}
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Preview", name: "preview", widget: "markdown"}
