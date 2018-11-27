@@ -7,6 +7,7 @@ $kaldi-red-invert: #fff
 $primary: $kaldi-red
 $primary-invert: $kaldi-red-invert
 
+@import "~bulma"
 .container
   padding-right: 1.5rem
   padding-left: 1.5rem
@@ -82,4 +83,13 @@ $primary-invert: $kaldi-red-invert
   &:not(:last-child)
     margin-bottom: 20px
 
-@import "~bulma"
+
+
+
+@import "css/sidebar.sass"
+
+@media only screen and (min-width: 1280px)
+    .container
+        // background-color: lightblue
+        max-width: 1100px
+        width: 1100px
