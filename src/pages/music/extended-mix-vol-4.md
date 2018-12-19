@@ -2,7 +2,7 @@
 templateKey: music-post
 title: Extended Mix Vol 4
 pricing:
-  premium: true
+  free: true
   price: 6
 image: /img/ea-overdose-cover.jpeg
 date: 2018-11-27T06:45:56.973Z
