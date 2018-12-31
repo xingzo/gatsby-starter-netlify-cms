@@ -18,13 +18,13 @@ export const MusicPostTemplate = ({
   trackID,
   tracklist,
   artwork,
-  premium,
   price,
 }) => {
   const PostContent = contentComponent || Content
   const width = "100%";
 
-  const downloadText = premium ? "Free Download" : "Download";
+  // const downloadText = premium ? "Free Download" : "Download";
+  const downloadText = "Download";
 
   return (
     <section className="section">
@@ -139,10 +139,6 @@ export const pageQuery = graphql`
         soundcloudTrackID
         tracklist
         image
-        pricing {
-          premium
-          price
-          }
       }
     }
   }
