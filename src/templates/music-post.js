@@ -18,8 +18,13 @@ export const MusicPostTemplate = ({
   trackID,
   tracklist,
   artwork,
+  premium,
+  price,
 }) => {
   const PostContent = contentComponent || Content
+  const width = "100%";
+
+  const downloadText = premium ? "Free Download" : "Download";
 
   return (
     <section className="section">
@@ -30,7 +35,7 @@ export const MusicPostTemplate = ({
       </h1>
         <div className="columns">
           <div className="column is-two-thirds" style={{"padding-right": "2em"}}>
-            <SoundcloudPlayer trackID={trackID}/>
+            <SoundcloudPlayer trackID={trackID} width={width} float={false}/>
             <br/>
             <p><strong>{description}</strong></p>
             <br/>
@@ -50,7 +55,7 @@ export const MusicPostTemplate = ({
             <div className="download">
               <a id="btn-free-download" class="btn-download btn-download-notext with-join"
                 href="https://www.freepik.com/index.php?goto=74&idfoto=3190080" data-url="https://www.freepik.com/index.php?goto=74&idfoto=3190080">
-                  <b>Free Download</b>
+                  <b>{downloadText}</b>
                   <span class="pill">88.60K</span>
                     <span>Free license with attribution</span>
               </a>
@@ -134,6 +139,10 @@ export const pageQuery = graphql`
         soundcloudTrackID
         tracklist
         image
+        pricing {
+          premium
+          price
+          }
       }
     }
   }
