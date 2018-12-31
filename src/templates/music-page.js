@@ -2,9 +2,28 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/Layout'
+import PaypalButton from '../components/PaypalButton'
+
+const CLIENT = {
+  sandbox: 'AbgJ_48VxIvYAhXew2i60muEHKQFze829S3doqMQeGsc76fV3mPUoXzWf4Io9HjVpRS03F8E_Z8Q6kbx',
+  production: 'AbgJ_48VxIvYAhXew2i60muEHKQFze829S3doqMQeGsc76fV3mPUoXzWf4Io9HjVpRS03F8E_Z8Q6kbx',
+};
+
+const ENV = process.env.NODE_ENV === 'production'
+  ? 'production'
+  : 'sandbox';
 
 class TagRoute extends React.Component {
   render() {
+    const onSuccess = (payment) =>
+  console.log('Successful payment!', payment);
+
+const onError = (error) =>
+  console.log('Erroneous payment OR failed to load script!', error);
+
+const onCancel = (data) =>
+  console.log('Cancelled payment!', data);
+
     const { data } = this.props
     const { edges: posts } = data.allMarkdownRemark
 
@@ -13,12 +32,13 @@ class TagRoute extends React.Component {
         <section className="section">
           <div className="container">
             <div className="content">
-              <h1 className="has-text-weight-bold is-size-2">Latest Stories</h1>
+              <h1 className="has-text-weight-bold is-size-2">All Extended Packs</h1>
             </div>
-            {posts
-              .map(({ node: post }) => (
+            <br/>
+            <div className="columns is-multiline">
+            {posts.map(({ node: post }) => (
                 <div
-                  className="content"
+                  className="column is-one-third"
                   style={{ border: '1px solid #eaecee', padding: '2em 4em' }}
                   key={post.id}
                 >
@@ -26,19 +46,26 @@ class TagRoute extends React.Component {
                     <Link className="has-text-primary" to={post.fields.slug}>
                       {post.frontmatter.title}
                     </Link>
-                    <span> &bull; </span>
                     <small>{post.frontmatter.date}</small>
                   </p>
                   <p>
                     {post.excerpt}
-                    <br />
-                    <br />
-                    <Link className="button is-small" to={post.fields.slug}>
-                      Keep Reading →
+                    <Link to={post.fields.slug}>
+                    <img style={{'max-width':'150px'}}src={post.frontmatter.image}></img>
                     </Link>
                   </p>
+                  <PaypalButton
+                  client={CLIENT}
+                  env={ENV}
+                  commit={true}
+                  currency={'USD'}
+                  total={100}
+                  onSuccess={onSuccess}
+                  onError={onError}
+                  onCancel={onCancel} />
                 </div>
               ))}
+            </div>
           </div>
         </section>
       </Layout>
@@ -63,6 +90,7 @@ export const tagPageQuery = graphql`
           }
           frontmatter {
             title
+            image
           }
         }
       }
