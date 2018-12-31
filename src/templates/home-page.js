@@ -111,10 +111,6 @@ export const PageQuery = graphql`
             preview
             description
             soundcloudTrackID
-            pricing {
-              premium
-              price
-              }
           }
         }
       }
