@@ -5,15 +5,11 @@ import scriptLoader from 'react-async-script-loader';
 class PaypalButton extends React.Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
     if (typeof window !== 'undefined') {
       window.React = React;
-      window.ReactDOM = ReactDOM;}
+      window.ReactDOM = ReactDOM;
+    }
 
-=======
-    window.React = React;
-    window.ReactDOM = ReactDOM;
->>>>>>> 5ad6a143da5d52654eeb725adea1cfa4c08e3829
     this.state = {
       showButton: false,
     };
@@ -79,14 +75,10 @@ class PaypalButton extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
     if (typeof window !== 'undefined') {
       const paypal = window.PAYPAL}
 
 
-=======
-    const paypal = window.PAYPAL
->>>>>>> 5ad6a143da5d52654eeb725adea1cfa4c08e3829
     // console.log(paypal)
 
     const {
