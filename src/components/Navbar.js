@@ -9,17 +9,11 @@ const Navbar = () => (
       <div className="navbar-brand">
         <Link to="/home" className="navbar-item">
           <figure className="image">
-            <img src='../img/logo-trial.png' alt="Afro-Extended" style={{ width: '160px' }} />
+            <img src='../../img/logo-trial.png' alt="Afro-Extended" style={{ width: '160px' }} />
           </figure>
         </Link>
       </div>
       <div className="navbar-start">
-        <Link className="navbar-item" to="/about">
-          About
-        </Link>
-        <Link className="navbar-item" to="/products">
-          Products
-        </Link>
         <Link className="navbar-item" to="/music">
           Music
         </Link>

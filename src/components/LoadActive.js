@@ -10,16 +10,19 @@ const LoadActive = (song) => {
   const trackID = song.active.frontmatter.soundcloudTrackID
   const tracklist = song.active.frontmatter.tracklist
   const slug = song.active.fields.slug
+  const width = "60%"
 
     return (
       <div className="column is-two-thirds">
-        <div className="columns">
-          <div className="column is-two-thirds"> Preview <SoundcloudPlayer trackID={trackID}/>
-          <Link className="button is-primary is-large" to={slug}>
-            <span><strong>Download Now</strong></span></Link></div>
-          <div className="column"> artwork  <img src ={imageSource}></img></div>
-        </div>
-        <div className="column"> <Tracklist tracklist={tracklist} /> </div>
+      <div className="column">
+        <p style={{'position':'relative', 'top':'30px', 'left':'8rem'}}><strong>Preview</strong></p>
+          <SoundcloudPlayer className="is-pulled-left" trackID={trackID} width={width} float={true}/>
+          <Link className="button is-primary is-large" style={{'position':'relative', 'top':'54px', 'left':'4rem'}} to={slug}>
+            <span><strong>Download Now</strong></span></Link>
+            <img className="is-pulled-right" style={{'max-width':'44%', 'position':'relative',
+    'bottom': '10rem'}}src ={imageSource}></img>
+    </div>
+        <div className="" style={{'padding-top':'5rem'}}> <Tracklist tracklist={tracklist} /> </div>
       </div>
     );
   }

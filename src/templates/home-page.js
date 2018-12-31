@@ -1,12 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, graphql } from 'gatsby'
+import SoundcloudPlayer from '../components/SoundcloudPlayer'
 import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
 import LatestReleases from '../components/LatestReleases'
 
 export const HomePageTemplate = ({ title, content, contentComponent, music }) => {
   const PageContent = contentComponent || Content
+
+  const latestSlug = music[0].node.fields.slug;
+  const latestImage = music[0].node.frontmatter.image
+  const latestTrackID = music[0].node.frontmatter.soundcloudTrackID
+  const width = "100%"
 
   return (
     <div>
@@ -17,18 +23,13 @@ export const HomePageTemplate = ({ title, content, contentComponent, music }) =>
               <div className="column is-content">
                 <div className="intro-content">
                   <h1 className="title intro-title">
-                  <strong>Afro-Extended</strong> is an open source CSS framework based on <strong>Flexbox</strong> and used by more than <strong>100,000</strong> developers.
+                  <strong>Afro-Extended</strong> is The Only Music Source DJs and Producers Need
                   </h1>
-                  <p> Dj Shinski dropped a free kit containing midi and loop samples suitable for trap, hip-hop, future r&b and beyond. </p>
-                  <div className="music-player"><iframe width="100%" height="100" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/421343235&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-                  </div>
-                  <div>
-                    <nav className="intro-buttons">
-                      <a className="button is-primary is-large" href="{{ site.data.meta.download }}">
-                        <span><strong>Download Now</strong></span></a>
-                      <a className="button is-light is-large" href="{{ site.data.meta.documentation }}">
-                        <span><span>View</span><strong>docs</strong></span></a>
-                    </nav>
+                  <p> Stop searching – the Afro Extended record pool supplies all of the extended versions and remixes of the hottest afro beats you need in one dedicated source </p>
+                  <SoundcloudPlayer className="is-pulled-left" trackID={latestTrackID} width={width} float={false}/>
+                  <div className="column">
+                    <Link className="button is-primary is-large" to={latestSlug}>
+                      <span><strong>Download The Latest Extended Pack</strong></span></Link>
                   </div>
 
                 </div>
@@ -37,11 +38,11 @@ export const HomePageTemplate = ({ title, content, contentComponent, music }) =>
                 <div id="introVideo" className="intro-video">
                   <div className="intro-shadow"></div>
                     <div className="intro-iframe">
-                    <img src = "../img/kenya-tour.jpg"></img>
+                    <img src = {latestImage}></img>
                     </div>
                     </div>
                     <p className="intro-author">
-                    <span>Video by <a href="http://www.vuemastery.com/" target="_blank">Vue Mastery</a></span>
+                    <span>Website by <a href="https://xingzo.github.io" target="_blank">Kingsley Nyaosi</a></span>
                     </p>
               </div>
             </div>
@@ -92,7 +93,7 @@ export const PageQuery = graphql`
       }
     }
     allMarkdownRemark(
-      limit: 3
+      limit: 5
       sort: { fields: [frontmatter___date], order: DESC }
       filter: { frontmatter: { templateKey: { eq: "music-post" } }}
     ) {
@@ -110,6 +111,10 @@ export const PageQuery = graphql`
             preview
             description
             soundcloudTrackID
+            pricing {
+              premium
+              price
+              }
           }
         }
       }

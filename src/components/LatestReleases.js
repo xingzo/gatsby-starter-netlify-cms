@@ -46,7 +46,7 @@ class LatestReleases extends React.Component {
           return(
           <div
             className="content"
-            style={{ border: '1px solid #eaecee', padding: '2em 4em' }}
+            style={{ 'border-left': '2px solid #fe4802', padding: '2rem' }}
             key={slug}
           >
             <h4>
@@ -55,12 +55,6 @@ class LatestReleases extends React.Component {
               </Link>
             </h4>
             <p><strong>{description}</strong> </p>
-            <p>
-              <br />
-              <Link className="button is-small" to={slug}>
-                Keep Reading ACTIVE→
-              </Link>
-            </p>
 
           </div>
         )
@@ -70,7 +64,7 @@ class LatestReleases extends React.Component {
         <div
           onClick={() => this.handleClick(post)}
           className="content"
-          style={{ border: '1px solid #eaecee', padding: '2em 4em', opacity: '.50' }}
+          style={{ padding: '2rem 2rem 2rem 2rem', opacity: '.50' }}
           key={slug}
         >
           <p>
@@ -79,12 +73,6 @@ class LatestReleases extends React.Component {
             </Link>
           </p>
           <p>{description} </p>
-          <p>
-            <br />
-            <Link className="button is-small" to={slug}>
-              Keep Reading
-            </Link>
-          </p>
 
         </div>
       )
@@ -102,8 +90,8 @@ class LatestReleases extends React.Component {
         <div className="container">
           <h1 className="title">Latest Releases</h1>
           <div className="columns">
-            <div className="column is-one-third">{this.loadLatestSongs(music)}</div>
             <LoadActive active={this.state.active} />
+            <div className="column is-one-third">{this.loadLatestSongs(music)}</div>
           </div>
           </div>
       </section>
