@@ -24,6 +24,7 @@ export const MusicPostTemplate = ({
   const width = "100%";
 
   // const downloadText = premium ? "Free Download" : "Download";
+  const downloadText = "Download";
 
   return (
     <section className="section">
