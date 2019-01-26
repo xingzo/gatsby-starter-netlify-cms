@@ -18,10 +18,17 @@ export const MusicPostTemplate = ({
   trackID,
   tracklist,
   artwork,
-  price,
+  pricing,
 }) => {
   const PostContent = contentComponent || Content
   const width = "100%";
+
+  if(pricing.premium) {
+    console.log("we got something:: ", pricing.premium)
+    console.log("we got something:: ", pricing.price)
+
+
+  }
 
   // const downloadText = premium ? "Free Download" : "Download";
   const downloadText = "Download";
@@ -95,6 +102,10 @@ MusicPostTemplate.propTypes = {
   title: PropTypes.string,
   trackID: PropTypes.string,
   artwork: PropTypes.string,
+  pricing: PropTypes.shape({
+    premium: PropTypes.boolean,
+    price: PropTypes.int,
+  }),
   helmet: PropTypes.instanceOf(Helmet),
 }
 
@@ -113,6 +124,7 @@ const MusicPost = ({ data }) => {
         trackID={post.frontmatter.soundcloudTrackID}
         tracklist={post.frontmatter.tracklist}
         artwork={post.frontmatter.image}
+        pricing={post.frontmatter.pricing}
       />
     </Layout>
   )
@@ -139,6 +151,10 @@ export const pageQuery = graphql`
         soundcloudTrackID
         tracklist
         image
+        pricing {
+          premium
+          price
+        }
       }
     }
   }

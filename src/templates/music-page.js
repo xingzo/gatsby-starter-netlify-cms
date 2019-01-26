@@ -2,7 +2,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import PaypalButton from '../components/PaypalButton'
+// import PaypalButton from '../components/PaypalButton'
 
 const CLIENT = {
   sandbox: 'AbgJ_48VxIvYAhXew2i60muEHKQFze829S3doqMQeGsc76fV3mPUoXzWf4Io9HjVpRS03F8E_Z8Q6kbx',
@@ -54,15 +54,7 @@ const onCancel = (data) =>
                     <img style={{'max-width':'150px'}}src={post.frontmatter.image}></img>
                     </Link>
                   </p>
-                  <PaypalButton
-                  client={CLIENT}
-                  env={ENV}
-                  commit={true}
-                  currency={'USD'}
-                  total={100}
-                  onSuccess={onSuccess}
-                  onError={onError}
-                  onCancel={onCancel} />
+
                 </div>
               ))}
             </div>
@@ -72,6 +64,16 @@ const onCancel = (data) =>
     )
   }
 }
+
+// <PaypalButton
+// client={CLIENT}
+// env={ENV}
+// commit={true}
+// currency={'USD'}
+// total={100}
+// onSuccess={onSuccess}
+// onError={onError}
+// onCancel={onCancel} />
 
 export default TagRoute
 
