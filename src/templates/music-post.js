@@ -47,7 +47,7 @@ export const MusicPostTemplate = ({
   if(pricing.premium) {
     console.log("we got something:: ", pricing.premium)
     console.log("we got something:: ", pricing.price)
-    console.log(process.env)
+    console.log(process.env.ACCESS_TOKEN)
     console.log(process)
   }
 
