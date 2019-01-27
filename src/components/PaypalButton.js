@@ -78,6 +78,9 @@ class PaypalButton extends React.Component {
     if (typeof window !== 'undefined') {
       const paypal = window.PAYPAL}
 
+      // const paypal = window.PAYPAL
+
+
 
     // console.log(paypal)
 

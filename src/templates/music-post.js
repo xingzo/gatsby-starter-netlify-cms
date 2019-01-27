@@ -7,6 +7,16 @@ import Layout from '../components/Layout'
 import Content, { HTMLContent } from '../components/Content'
 import SoundcloudPlayer from '../components/SoundcloudPlayer'
 import Tracklist from '../components/Tracklist'
+import PaypalButton from '../components/PaypalButton'
+
+const CLIENT = {
+  sandbox: 'AbgJ_48VxIvYAhXew2i60muEHKQFze829S3doqMQeGsc76fV3mPUoXzWf4Io9HjVpRS03F8E_Z8Q6kbx',
+  production: 'AbgJ_48VxIvYAhXew2i60muEHKQFze829S3doqMQeGsc76fV3mPUoXzWf4Io9HjVpRS03F8E_Z8Q6kbx',
+};
+
+const ENV = process.env.NODE_ENV === 'production'
+  ? 'production'
+  : 'sandbox';
 
 export const MusicPostTemplate = ({
   content,
@@ -20,14 +30,24 @@ export const MusicPostTemplate = ({
   artwork,
   pricing,
 }) => {
+
+//paypal code
+  const onSuccess = (payment) =>
+  console.log('Successful payment!', payment);
+
+  const onError = (error) =>
+  console.log('Erroneous payment OR failed to load script!', error);
+
+  const onCancel = (data) =>
+  console.log('Cancelled payment!', data);
+
   const PostContent = contentComponent || Content
   const width = "100%";
 
   if(pricing.premium) {
     console.log("we got something:: ", pricing.premium)
     console.log("we got something:: ", pricing.price)
-
-
+    console.log(process.env)
   }
 
   // const downloadText = premium ? "Free Download" : "Download";
@@ -60,16 +80,26 @@ export const MusicPostTemplate = ({
             </a>
 
             <div className="download">
-              <a id="btn-free-download" class="btn-download btn-download-notext with-join"
+              <a id="btn-free-download" className="btn-download btn-download-notext with-join"
                 href="https://www.freepik.com/index.php?goto=74&idfoto=3190080" data-url="https://www.freepik.com/index.php?goto=74&idfoto=3190080">
                   <b>{downloadText}</b>
-                  <span class="pill">88.60K</span>
+                  <span className="pill">88.60K</span>
                     <span>Free license with attribution</span>
               </a>
 
               <a id="gr_bookmark_3190080" data-id="3190080" data-fotografo="474714" data-type="1" className="gr_favorite favourite flaticon-heart" href="https://www.freepik.com/login">
                 <span className="pill">765</span>
               </a>
+
+              <PaypalButton
+              client={CLIENT}
+              env={ENV}
+              commit={true}
+              currency={'USD'}
+              total={100}
+              onSuccess={onSuccess}
+              onError={onError}
+              onCancel={onCancel} />
 
             </div>
             <div className="sidebar-content">
