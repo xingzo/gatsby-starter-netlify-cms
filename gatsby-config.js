@@ -6,12 +6,6 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
     {
-        resolve: `gatsby-source-patronus`,
-        options: {
-          apiKey: process.env.GATSBY_ACCESS_TOKEN2,
-        },
-      },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/pages`,
