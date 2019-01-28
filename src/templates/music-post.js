@@ -52,8 +52,8 @@ export const MusicPostTemplate = ({
     console.log(process.env.ACCESS_TOKEN)
     console.log(process.env.ACCESS_TOKEN2)
 
-    console.log(process)
-    console.log("________MY PROCESS_________", myProcess)
+    // console.log(process)
+    // console.log("________MY PROCESS_________", myProcess)
 
   }
 
