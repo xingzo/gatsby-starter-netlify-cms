@@ -43,12 +43,16 @@ export const MusicPostTemplate = ({
 
   const PostContent = contentComponent || Content
   const width = "100%";
+  let myProcess = process
+
 
   if(pricing.premium) {
     console.log("we got something:: ", pricing.premium)
     console.log("we got something:: ", pricing.price)
     console.log(process.env.ACCESS_TOKEN)
     console.log(process)
+    console.log("________MY PROCESS_________", myProcess)
+
   }
 
   // const downloadText = premium ? "Free Download" : "Download";
