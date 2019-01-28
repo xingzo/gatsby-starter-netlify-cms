@@ -1,6 +1,7 @@
 [build]
   publish = "public"
-  command = "node +x ./scripts/create-env.js && npm run build"
+  command = "npm run build"
+  # command = "node +x ./scripts/create-env.js && npm run build"
   GATSBY_PAYPAL_KEY = 'sexret'
 [build.environment]
   YARN_VERSION = "1.3.2"

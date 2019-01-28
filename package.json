@@ -35,7 +35,6 @@
   "scripts": {
     "start": "npm run develop",
     "clean": "rimraf .cache public",
-    "prebuild": "./scripts/create-env.js",
     "build": "npm run clean && gatsby build",
     "develop": "npm run clean && gatsby develop",
     "serve": "gatsby serve",
