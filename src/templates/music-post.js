@@ -10,8 +10,8 @@ import Tracklist from '../components/Tracklist'
 import PaypalButton from '../components/PaypalButton'
 
 const CLIENT = {
-  sandbox: 'AbgJ_48VxIvYAhXew2i60muEHKQFze829S3doqMQeGsc76fV3mPUoXzWf4Io9HjVpRS03F8E_Z8Q6kbx',
-  production: 'AbgJ_48VxIvYAhXew2i60muEHKQFze829S3doqMQeGsc76fV3mPUoXzWf4Io9HjVpRS03F8E_Z8Q6kbx',
+  sandbox: process.env.GATSBY_PAYPAL_DEV,
+  production: process.env.GATSBY_PAYPAL_PROD,
 };
 
 const ENV = process.env.NODE_ENV === 'production'
@@ -43,17 +43,11 @@ export const MusicPostTemplate = ({
 
   const PostContent = contentComponent || Content
   const width = "100%";
-  let myProcess = process
 
 
   if(pricing.premium) {
     console.log("we got something:: ", pricing.premium)
     console.log("we got something:: ", pricing.price)
-    console.log(process.env.ACCESS_TOKEN)
-    console.log(process.env.ACCESS_TOKEN2)
-
-    // console.log(process)
-    // console.log("________MY PROCESS_________", myProcess)
 
   }
 
@@ -103,7 +97,7 @@ export const MusicPostTemplate = ({
               env={ENV}
               commit={true}
               currency={'USD'}
-              total={100}
+              total={pricing.price}
               onSuccess={onSuccess}
               onError={onError}
               onCancel={onCancel} />
