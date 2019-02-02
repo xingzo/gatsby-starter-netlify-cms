@@ -6,26 +6,21 @@ import Layout from '../components/Layout'
 import SoundcloudPlayer from '../components/SoundcloudPlayer'
 import Tracklist from '../components/Tracklist'
 import PaypalButton from '../components/PaypalButton'
-
-
-// const CLIENT = {
-//   sandbox: process.env.GATSBY_PAYPAL_DEV,
-//   production: process.env.GATSBY_PAYPAL_PROD,
-// };
-//
-// const ENV = process.env.NODE_ENV === 'production'
-//   ? 'production'
-//   : 'sandbox';
+import Modal from '../components/Modal'
 
 class MusicPost extends React.Component {
   constructor(props) {
     super(props);
 
+    const { data } = this.props
+    const { frontmatter: track } = data.markdownRemark
+
     this.state = {
       showDropdown: true,
+      showDownloadModal: false,
+      price: track.pricing.price,
     };
   }
-
 
   //paypal
   CLIENT = {
@@ -37,14 +32,36 @@ class MusicPost extends React.Component {
     ? 'production'
     : 'sandbox';
 
-  onSuccess = (payment) =>
-  console.log('Successful payment!', payment);
+  onSuccess = (payment) => {
+    console.log('Successful payment!', payment);
+    //open modal to enter email
+
+    //send email to reciepent
+
+    //show confirmation or error message from emailjs
+
+  }
 
   onError = (error) =>
-  console.log('Erroneous payment OR failed to load script!', error);
+    console.log('Erroneous payment OR failed to load script!', error);
 
   onCancel = (data) =>
-  console.log('Cancelled payment!', data);
+    console.log('Cancelled payment!', data);
+
+  paypalButton = () =>{
+
+    return (
+      <PaypalButton
+      client={this.CLIENT}
+      env={this.ENV}
+      commit={true}
+      currency={'USD'}
+      total={this.state.price}
+      onSuccess={this.onSuccess}
+      onError={this.onError}
+      onCancel={this.onCancel} />
+    )
+  }
 
   //soundcloud
   width = "100%";
@@ -52,8 +69,15 @@ class MusicPost extends React.Component {
 
   //modal
   openDownloadModal = () =>{
-  console.log("we are opening the modal")
+    this.setState({
+      showDownloadModal: true,
+    })
+  }
 
+  hideDownloadModal = () =>{
+    this.setState({
+      showDownloadModal: false,
+    })
   }
 
 
@@ -61,11 +85,15 @@ class MusicPost extends React.Component {
     const { data } = this.props
     const { frontmatter: track } = data.markdownRemark
 
+
     console.log(track)
     return (
     <Layout>
       <section className="section">
       <Helmet title={`${track.title} | ${track.title}`} />
+        {this.state.showDownloadModal && (
+          <Modal title={"Download Modal"} onClose={this.hideDownloadModal} track={track} button={this.paypalButton}/>
+        )}
         <div className="container content">
         <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
           {track.title}
@@ -99,18 +127,9 @@ class MusicPost extends React.Component {
                 <a id="gr_bookmark_3190080" data-id="3190080" data-fotografo="474714" data-type="1" className="gr_favorite favourite flaticon-heart" href="https://www.freepik.com/login">
                   <span className="pill">765</span>
                 </a>
-
-                <PaypalButton
-                client={this.CLIENT}
-                env={this.ENV}
-                commit={true}
-                currency={'USD'}
-                total={track.pricing.price}
-                onSuccess={this.onSuccess}
-                onError={this.onError}
-                onCancel={this.onCancel} />
-
+                
               </div>
+
               <div className="sidebar-content">
                 <img className="user-card" src={track.image} />
                 {track.tags && track.tags.length ? (
@@ -134,8 +153,6 @@ class MusicPost extends React.Component {
     )
   }
 }
-
-
 
 export default MusicPost
 
