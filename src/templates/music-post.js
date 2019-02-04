@@ -6,19 +6,18 @@ import Layout from '../components/Layout'
 import SoundcloudPlayer from '../components/SoundcloudPlayer'
 import Tracklist from '../components/Tracklist'
 import PaypalButton from '../components/PaypalButton'
-import Modal from '../components/Modal'
+import DownloadModal from '../components/modal/DownloadModal'
+import SuccessModal from '../components/modal/SuccessModal'
+
 
 class MusicPost extends React.Component {
   constructor(props) {
     super(props);
 
-    const { data } = this.props
-    const { frontmatter: track } = data.markdownRemark
-
     this.state = {
       showDropdown: true,
       showDownloadModal: false,
-      price: track.pricing.price,
+      showSuccessModal: false,
     };
   }
 
@@ -35,10 +34,10 @@ class MusicPost extends React.Component {
   onSuccess = (payment) => {
     console.log('Successful payment!', payment);
     //open modal to enter email
-
-    //send email to reciepent
-
-    //show confirmation or error message from emailjs
+    this.setState({
+      showDownloadModal: false,
+      showSuccessModal: true,
+    })
 
   }
 
@@ -49,6 +48,8 @@ class MusicPost extends React.Component {
     console.log('Cancelled payment!', data);
 
   paypalButton = () =>{
+    const { data } = this.props
+    const { frontmatter: track } = data.markdownRemark
 
     return (
       <PaypalButton
@@ -56,7 +57,7 @@ class MusicPost extends React.Component {
       env={this.ENV}
       commit={true}
       currency={'USD'}
-      total={this.state.price}
+      total={track.pricing.price}
       onSuccess={this.onSuccess}
       onError={this.onError}
       onCancel={this.onCancel} />
@@ -80,19 +81,26 @@ class MusicPost extends React.Component {
     })
   }
 
+  hideSuccessModal = () =>{
+    this.setState({
+      showSuccessModal: false,
+    })
+  }
+
 
   render() {
     const { data } = this.props
     const { frontmatter: track } = data.markdownRemark
 
-
-    console.log(track)
     return (
     <Layout>
       <section className="section">
       <Helmet title={`${track.title} | ${track.title}`} />
         {this.state.showDownloadModal && (
-          <Modal title={"Download Modal"} onClose={this.hideDownloadModal} track={track} button={this.paypalButton}/>
+          <DownloadModal title={"Download Modal"} onClose={this.hideDownloadModal} track={track} button={this.paypalButton}/>
+        )}
+        {this.state.showSuccessModal && (
+          <SuccessModal title={"Success Modal"} onClose={this.hideSuccessModal} track={track} />
         )}
         <div className="container content">
         <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
@@ -127,7 +135,7 @@ class MusicPost extends React.Component {
                 <a id="gr_bookmark_3190080" data-id="3190080" data-fotografo="474714" data-type="1" className="gr_favorite favourite flaticon-heart" href="https://www.freepik.com/login">
                   <span className="pill">765</span>
                 </a>
-                
+
               </div>
 
               <div className="sidebar-content">
@@ -169,6 +177,7 @@ export const tagPageQuery = graphql`
         soundcloudTrackID
         tracklist
         image
+        downloadLink
         pricing {
           premium
           price

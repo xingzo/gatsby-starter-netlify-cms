@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'gatsby'
 
-class Modal extends React.Component {
+export default class DownloadModal extends React.Component {
+  state = {
+  }
 
-  downloadModal = (track) =>{
-    const price = track.pricing.price;
-    const title = track.title;
+  render (){
+    const price = this.props.track.pricing.price;
+    const title = this.props.track.title;
 
     return (
       <div className="modal is-active">
@@ -36,16 +38,7 @@ class Modal extends React.Component {
           </footer>
         </div>
       </div>)
-  }
 
-  render (){
-    return (
-      <div>
-        {this.downloadModal(this.props.track)}
-      </div>
-    )
 
 }
 }
-
-export default Modal
