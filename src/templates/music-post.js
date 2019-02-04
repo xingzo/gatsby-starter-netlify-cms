@@ -89,6 +89,11 @@ class MusicPost extends React.Component {
 
 
   render() {
+    console.log('PAYPAL_PROD', process.env.PAYPAL_PROD)
+    console.log('GATSBY_PAYPAL_PROD', process.env.GATSBY_PAYPAL_PROD)
+    console.log('NODE_ENV', process.env.NODE_ENV)
+
+
     const { data } = this.props
     const { frontmatter: track } = data.markdownRemark
 
