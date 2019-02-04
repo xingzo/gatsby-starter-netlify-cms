@@ -26,6 +26,7 @@ export const HomePageTemplate = ({ title, content, contentComponent, music }) =>
                   <strong>Afro-Extended</strong> is The Only Music Source DJs and Producers Need
                   </h1>
                   <p> Stop searching – the Afro Extended record pool supplies all of the extended versions and remixes of the hottest afro beats you need in one dedicated source </p>
+                  <br/>
                   <SoundcloudPlayer className="is-pulled-left" trackID={latestTrackID} width={width} float={false}/>
                   <div className="column">
                     <Link className="button is-primary is-large" to={latestSlug}>

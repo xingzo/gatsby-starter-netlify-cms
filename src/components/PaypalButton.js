@@ -47,21 +47,11 @@ class PaypalButton extends React.Component {
   //
   // }
   componentWillUpdate(nextProps) {
-    // console.log(nextProps)
-    // console.log(this.props)
-
     const {
       isScriptLoaded,
       isScriptLoadSucceed,
     } = nextProps;
 
-    // this.setState({ showButton: true });
-
-    // isScriptLoaded = true
-    // isScriptLoadSucceed = true
-    // if (this.props.isScriptLoadSucceed) {
-    //   this.setState({ showButton: true });
-    // }
     const isLoadedButWasntLoadedBefore =
       !this.state.showButton &&
       !this.props.isScriptLoaded &&
@@ -78,8 +68,9 @@ class PaypalButton extends React.Component {
     if (typeof window !== 'undefined') {
       const paypal = window.PAYPAL}
 
-
-    // console.log(paypal)
+      // TODO: need to fix this line of code. Dev wont work without it
+      // add a staging envrionment
+      // const paypal = window.PAYPAL
 
     const {
       total,

@@ -1,145 +1,171 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { kebabCase } from 'lodash'
 import Helmet from 'react-helmet'
-import { graphql, Link } from 'gatsby'
+import { kebabCase } from 'lodash'
+import { Link, graphql } from 'gatsby'
 import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
 import SoundcloudPlayer from '../components/SoundcloudPlayer'
 import Tracklist from '../components/Tracklist'
+import PaypalButton from '../components/PaypalButton'
+import DownloadModal from '../components/modal/DownloadModal'
+import SuccessModal from '../components/modal/SuccessModal'
 
-export const MusicPostTemplate = ({
-  content,
-  contentComponent,
-  description,
-  tags,
-  title,
-  helmet,
-  trackID,
-  tracklist,
-  artwork,
-  pricing,
-}) => {
-  const PostContent = contentComponent || Content
-  const width = "100%";
 
-  if(pricing.premium) {
-    console.log("we got something:: ", pricing.premium)
-    console.log("we got something:: ", pricing.price)
+class MusicPost extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      showDropdown: true,
+      showDownloadModal: false,
+      showSuccessModal: false,
+    };
+  }
+
+  //paypal
+  CLIENT = {
+    sandbox: process.env.GATSBY_PAYPAL_DEV,
+    production: process.env.GATSBY_PAYPAL_PROD,
+  };
+
+  ENV = process.env.NODE_ENV === 'production'
+    ? 'production'
+    : 'sandbox';
+
+  onSuccess = (payment) => {
+    console.log('Successful payment!', payment);
+    //open modal to enter email
+    this.setState({
+      showDownloadModal: false,
+      showSuccessModal: true,
+    })
 
   }
 
-  // const downloadText = premium ? "Free Download" : "Download";
-  const downloadText = "Download";
+  onError = (error) =>
+    console.log('Erroneous payment OR failed to load script!', error);
 
-  return (
-    <section className="section">
-      {helmet || ''}
-      <div className="container content">
-      <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
-        {title}
-      </h1>
-        <div className="columns">
-          <div className="column is-two-thirds" style={{"padding-right": "2em"}}>
-            <SoundcloudPlayer trackID={trackID} width={width} float={false}/>
-            <br/>
-            <p><strong>{description}</strong></p>
-            <br/>
-            <Tracklist tracklist={tracklist} />
-          </div>
-          <aside id="sidebar">
-            <a id="btn-report-copy" href="javascript:void(0)" className="btn-report-copy" >
-              <i className="flaticon-exclamation"></i>
-              <span>Copyright complaint</span>
-            </a>
+  onCancel = (data) =>
+    console.log('Cancelled payment!', data);
 
-            <a className="download-problems" href="javascript:void(0)" id="btn-broken-link">
-              <i className="flaticon-bug"></i>
-              <span>Download problems?</span>
-            </a>
+  paypalButton = () =>{
+    const { data } = this.props
+    const { frontmatter: track } = data.markdownRemark
 
-            <div className="download">
-              <a id="btn-free-download" class="btn-download btn-download-notext with-join"
-                href="https://www.freepik.com/index.php?goto=74&idfoto=3190080" data-url="https://www.freepik.com/index.php?goto=74&idfoto=3190080">
-                  <b>{downloadText}</b>
-                  <span class="pill">88.60K</span>
-                    <span>Free license with attribution</span>
-              </a>
+    return (
+      <PaypalButton
+      client={this.CLIENT}
+      env={this.ENV}
+      commit={true}
+      currency={'USD'}
+      total={track.pricing.price}
+      onSuccess={this.onSuccess}
+      onError={this.onError}
+      onCancel={this.onCancel} />
+    )
+  }
 
-              <a id="gr_bookmark_3190080" data-id="3190080" data-fotografo="474714" data-type="1" className="gr_favorite favourite flaticon-heart" href="https://www.freepik.com/login">
-                <span className="pill">765</span>
-              </a>
+  //soundcloud
+  width = "100%";
 
-            </div>
-            <div className="sidebar-content">
-              <img className="user-card" src={artwork} />
-              {tags && tags.length ? (
-                <div style={{ marginTop: `4rem` }}>
-                  <h4>Tags</h4>
-                  <ul className="taglist">
-                    {tags.map(tag => (
-                      <li key={tag + `tag`}>
-                        <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-  )
-}
 
-MusicPostTemplate.propTypes = {
-  content: PropTypes.node.isRequired,
-  contentComponent: PropTypes.func,
-  description: PropTypes.string,
-  tracklist: PropTypes.string,
-  title: PropTypes.string,
-  trackID: PropTypes.string,
-  artwork: PropTypes.string,
-  pricing: PropTypes.shape({
-    premium: PropTypes.boolean,
-    price: PropTypes.int,
-  }),
-  helmet: PropTypes.instanceOf(Helmet),
-}
+  //modal
+  openDownloadModal = () =>{
+    this.setState({
+      showDownloadModal: true,
+    })
+  }
 
-const MusicPost = ({ data }) => {
-  const { markdownRemark: post } = data
+  hideDownloadModal = () =>{
+    this.setState({
+      showDownloadModal: false,
+    })
+  }
 
-  return (
+  hideSuccessModal = () =>{
+    this.setState({
+      showSuccessModal: false,
+    })
+  }
+
+
+  render() {
+    const { data } = this.props
+    const { frontmatter: track } = data.markdownRemark
+
+    return (
     <Layout>
-      <MusicPostTemplate
-        content={post.html}
-        contentComponent={HTMLContent}
-        description={post.frontmatter.description}
-        helmet={<Helmet title={`${post.frontmatter.title} | Music`} />}
-        tags={post.frontmatter.tags}
-        title={post.frontmatter.title}
-        trackID={post.frontmatter.soundcloudTrackID}
-        tracklist={post.frontmatter.tracklist}
-        artwork={post.frontmatter.image}
-        pricing={post.frontmatter.pricing}
-      />
-    </Layout>
-  )
-}
+      <section className="section">
+      <Helmet title={`${track.title} | ${track.title}`} />
+        {this.state.showDownloadModal && (
+          <DownloadModal title={"Download Modal"} onClose={this.hideDownloadModal} track={track} button={this.paypalButton}/>
+        )}
+        {this.state.showSuccessModal && (
+          <SuccessModal title={"Success Modal"} onClose={this.hideSuccessModal} track={track} />
+        )}
+        <div className="container content">
+        <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
+          {track.title}
+        </h1>
+          <div className="columns">
+            <div className="column is-two-thirds" style={{"padding-right": "2em"}}>
+              <SoundcloudPlayer trackID={track.soundcloudTrackID} width={this.width} float={false}/>
+              <br/>
+              <p><strong>{track.description}</strong></p>
+              <br/>
+              <Tracklist tracklist={track.tracklist} />
+            </div>
+            <aside id="sidebar">
+              <a id="btn-report-copy" href="javascript:void(0)" className="btn-report-copy" >
+                <i className="flaticon-exclamation"></i>
+                <span>Copyright complaint</span>
+              </a>
 
-MusicPost.propTypes = {
-  data: PropTypes.shape({
-    markdownRemark: PropTypes.object,
-  }),
+              <a className="download-problems" href="javascript:void(0)" id="btn-broken-link">
+                <i className="flaticon-bug"></i>
+                <span>Download problems?</span>
+              </a>
+
+              <div className="download">
+                <button id="btn-free-download" className="btn-download btn-download-notext with-join" onClick={this.openDownloadModal}
+                  href="https://www.freepik.com/index.php?goto=74&idfoto=3190080" data-url="https://www.freepik.com/index.php?goto=74&idfoto=3190080">
+                    <span className="pill">88.60K</span>
+                      <span>Free license with attribution</span>
+                </button>
+
+                <a id="gr_bookmark_3190080" data-id="3190080" data-fotografo="474714" data-type="1" className="gr_favorite favourite flaticon-heart" href="https://www.freepik.com/login">
+                  <span className="pill">765</span>
+                </a>
+
+              </div>
+
+              <div className="sidebar-content">
+                <img className="user-card" src={track.image} />
+                {track.tags && track.tags.length ? (
+                  <div style={{ marginTop: `4rem` }}>
+                    <h4>Tags</h4>
+                    <ul className="taglist">
+                      {track.tags.map(tag => (
+                        <li key={tag + `tag`}>
+                          <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </Layout>
+    )
+  }
 }
 
 export default MusicPost
 
-export const pageQuery = graphql`
-  query MusicPostByID($id: String!) {
+export const tagPageQuery = graphql`
+  query singleMusicPost($id: String!) {
     markdownRemark(id: { eq: $id }) {
       id
       html
@@ -151,6 +177,7 @@ export const pageQuery = graphql`
         soundcloudTrackID
         tracklist
         image
+        downloadLink
         pricing {
           premium
           price
