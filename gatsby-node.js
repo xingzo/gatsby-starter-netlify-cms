@@ -75,6 +75,12 @@ exports.createPages = ({ actions, graphql }) => {
       component: path.resolve(`src/templates/music-page.js`)
     })
 
+    // Thanks page
+    createPage({
+      path: '/thanks',
+      component: path.resolve(`src/templates/thanks.js`)
+    })
+
 
 
   })
