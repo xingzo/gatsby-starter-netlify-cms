@@ -24,7 +24,7 @@ class MusicPost extends React.Component {
   //paypal
   CLIENT = {
     sandbox: process.env.GATSBY_PAYPAL_DEV,
-    production: process.env.GATSBY_PAYPAL_PROD,
+    production: process.env.PAYPAL_PROD,
   };
 
   ENV = process.env.NODE_ENV === 'production'
