@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+  path: `./.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
@@ -9,6 +9,12 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
+    {
+      resolve: `gatsby-plugin-env-variables`,
+      options: {
+        whitelist: ["PAYPAL_PROD"]
+      },
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
